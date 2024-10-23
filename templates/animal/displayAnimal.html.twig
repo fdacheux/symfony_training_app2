@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{animal.name}}{% endblock %}
+{% block myTitle %}{{animal.name}} description{% endblock %}
+{% block body %}
+<div class="row align-items-center mx-3">
+    <div class="col-2 text-center">
+        <img class="img-fluid" src="{{asset('images/' ~ animal.image)}}" alt="">
+    </div>
+    <div class="col-auto">
+        <div>Description : {{ animal.description }}</div>
+        <div>Weight : {{ animal.weight }} kg</div>
+        <div>Dangerous : 
+        {% if animal.dangerous %}
+            <span class="badge bg-danger">YES</span>
+        {% else %}
+            <span class="badge bg-success">NO</span>
+        {% endif %}
+        </div>
+        <div>
+            <a href="{{path('display_family', {'id': animal.family.id})}}" class="btn btn-info">{{ animal.family.fieldName }}</a></a>
+        </div>
+        <div class="mt-3">
+            <p>I can be found there : </p>
+            {% for continent in animal.continents %}
+                <a class="btn btn-warning" href="{{path('display_continent', {'id': continent.id})}}">{{ continent.fieldName }}</a>
+                {# <a class="btn btn-warning">{{ continent.fieldName }}</a> #}
+            {% endfor %}  
+        </div>        
+        <div class="mt-3">
+            <p>Owner's of such animal : </p>
+            {% for dispose in animal.disposes %}
+                <a class="btn btn-primary" href="{{path('display_person', {'id': dispose.person.id})}}">{{ dispose.person.name }}</a>
+                {# <a class="btn btn-warning">{{ continent.fieldName }}</a> #}
+            {% endfor %}  
+        </div>        
+
+        
+    </div>
+</div>
+{% endblock %}

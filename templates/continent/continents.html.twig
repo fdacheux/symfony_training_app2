@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Continents list{% endblock %}
+{% block myTitle %}Here's the continents list{% endblock %}
+{% block body %}
+{% for continent in continents %}
+    <h2 class="border-bottom border-primary mx-3"><a class="text-decoration-none" href="{{path('display_continent', {'id': continent.id})}}">{{ continent.fieldName|capitalize }}</a></h2>
+    <div class="row  mx-3">
+        {% for animal in continent.animals %}
+            <div class="col-12 col-md-6 col-lg-2 text-center">
+                <div class="row align-items-center">
+                    <div class="col-2 text-center"> 
+                        <img class="img-fluid" src="{{asset('images/' ~ animal.image)}}" alt=""/>
+                    </div>
+                    <div class="col text-center">
+                        <h2><a href="{{path('display_animal', {'id': animal.id})}}">{{ animal.name }}</a></h2>
+                        <div>{{ animal.description }}</div>
+                        <div><a href="{{path('display_family', {'id': animal.family.id})}}" class="btn btn-info">{{ animal.family.fieldName }}</a></a></div>
+                        <div class="mt-3">
+                            {% for continent2 in animal.continents %}
+                            {% if (continent.id  != continent2.id) %}
+                                <a class="btn btn-warning" href="{{path('display_continent', {'id': continent2.id})}}">{{ continent2.fieldName }}</a>
+                                {# <a class="btn btn-warning">{{ continent2.fieldName }}</a> #}
+                            {% endif %}
+                            {% endfor %}  
+                        </div>        
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    
+{% endfor %}
+{% endblock %}

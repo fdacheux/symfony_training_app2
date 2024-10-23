@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Owners list{% endblock %}
+{% block myTitle %}Here's the owners list{% endblock %}
+{% block body %}
+{% for person in persons %}
+    <h2 class="border-bottom border-primary mx-3"><a class="text-decoration-none" href="{{path('display_person', {'id': person.id})}}">{{ person.name }}</a></h2>
+    <h3 class="mx-3">Owner's animals :</h3>
+    {% for dispose in person.disposes %}
+        <div class="row align-items-center mx-1 mb-2">
+            <div class="col-2">
+                <img src="{{asset('images/' ~ dispose.animal.image)}}" alt="">
+            </div>
+            <div class="col">
+                <h2><a href="{{path('display_animal', {'id': dispose.animal.id})}}">{{ dispose.animal.name }}</a></h2>
+                <div>Number : {{ dispose.nb }}</div>
+            </div>
+        </div>
+    {% endfor %}
+{% endfor %}
+{% endblock %}
